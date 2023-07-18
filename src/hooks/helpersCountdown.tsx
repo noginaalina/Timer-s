@@ -9,36 +9,42 @@ const useHelpersCountdown = () => {
     const [inputMinutes, setInputMinutes] = useState<number>(0);
     const [inputSeconds, setInputSeconds] = useState<number>(0);
 
-    const handleResetMinutes = useCallback(() => {
+    const handleResetMinutes = () => {
         setMinutesCountdown(0);
         setInputMinutes(0);
-    }, []);
+    };
 
-    const handleResetSeconds = useCallback(() => {
+    const handleResetSeconds = () => {
         setSecondsCountdown(0);
         setInputSeconds(0);
-    }, []);
+    };
 
     const handleResetCountdown = useCallback(() => {
         handleResetMinutes();
         handleResetSeconds();
-    }, [handleResetMinutes, handleResetSeconds]);
+    }, [playCountdown]);
 
-    const handlePlayCountdown = () => {
+    const handlePlayCountdown = useCallback(() => {
         setPlayCountdown(!playCountdown);
-    };
+    }, [playCountdown]);
 
-    const handleChangeMinutes = useCallback((event: ChangeEvent<HTMLInputElement>) =>{
-        const value = parseInt(event.currentTarget.value);
-        setInputMinutes(value);
+    const handleChangeMinutes = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            const value = parseInt(event.currentTarget.value);
+            setInputMinutes(value);
             setMinutesCountdown(value);
-    }, []);
+        },
+        [minutesCountdown]
+    );
 
-    const handleChangeSeconds = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        const value = parseInt(event.currentTarget.value);
-        setInputSeconds(value);
-        setSecondsCountdown(value);
-    }, []);
+    const handleChangeSeconds = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            const value = parseInt(event.currentTarget.value);
+            setInputSeconds(value);
+            setSecondsCountdown(value);
+        },
+        [secondsCountdown]
+    );
 
 
     useEffect(() => {
